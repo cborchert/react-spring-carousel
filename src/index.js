@@ -17,7 +17,8 @@ class ReactSpringCarousel extends Component {
       tension: 300,
       friction: 10,
       clamp: true
-    }
+    },
+    centerMode: true
   };
   constructor(props) {
     super(props);
@@ -28,8 +29,7 @@ class ReactSpringCarousel extends Component {
       slides: [],
       numSlides: 0,
       cutToSlideOnRest: false,
-      dragging: false,
-      centerMode: true
+      dragging: false
     };
     this.sliderRef = React.createRef();
     this.forceRepaint = debounce(this.forceRepaint, 100);
@@ -164,7 +164,7 @@ class ReactSpringCarousel extends Component {
     const slideSizes = this.calculateSlideSizes();
     let offset = 0;
     const buffer = this.state.numSlides;
-    const centerMode = this.state.centerMode;
+    const { centerMode } = this.props;
     if (slideSizes) {
       const slidesToCalculate = slideSizes.slice(0, onSlide + buffer);
       if (slidesToCalculate) {

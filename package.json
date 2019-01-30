@@ -1,0 +1,24 @@
+{
+  "name": "react-simple-carousel",
+  "version": "1.0.0",
+  "description": "A simple carousel component for React using gestures and React Spring",
+  "main": "dist/index.js",
+  "repository": "https://github.com/cborchert/react-simple-carousel",
+  "author": "Christopher Borchert",
+  "license": "MIT",
+  "scripts": {
+    "build": "parcel build ./src/index.js --target node --out-dir ./dist",
+    "start": "parcel build ./src/index.js --target node --out-dir ./dist --watch"
+  },
+  "keywords": [
+    "simple",
+    "react",
+    "carousel",
+    "slider",
+    "spring",
+    "gesture"
+  ],
+  "dependencies": {
+    "react": "^16.7.0"
+  }
+}

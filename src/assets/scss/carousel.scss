@@ -1,0 +1,113 @@
+.react-simple-carousel {
+  width: 100%;
+  overflow: hidden;
+  position: relative;
+  box-sizing: border-box;
+  &__inner {
+    display: flex;
+    align-items: center;
+    width: 100%;
+    will-change: transform;
+  }
+  &__slide {
+    position: relative;
+    flex: 1;
+    text-align: center;
+    user-select: none;
+    transition: 200ms;
+    cursor: move;
+    cursor: grab;
+    cursor: -moz-grab;
+    cursor: -webkit-grab;
+    &--active {
+      //for active slides
+      opacity: 1;
+    }
+    &--inactive {
+      //for active slides
+      opacity: 0.2;
+    }
+    &--index- {
+      //shows index of the slide,
+      //TO DO: this needs to be correctly calculated
+      //e.g. LBSlider__slide--distance_1 is the same as next
+      //e.g. LBSlider__slide--distance_-1 is the same as prev
+    }
+    &--next {
+      //next slide
+      opacity: 0.8;
+    }
+    &--prev {
+      //prev slide
+      opacity: 0.8;
+    }
+    &--distance_ {
+      //shows index of the slide,
+      //e.g.
+    }
+    &--clone {
+      //for clones/buffer slides
+    }
+    a {
+      -webkit-user-drag: none;
+      user-select: none;
+    }
+    img {
+      max-width: 100%;
+      -webkit-user-drag: none;
+      user-select: none;
+    }
+  }
+  &__controls {
+    &__arrow {
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      font-size: 0;
+      background: rgba(0, 0, 0, 0.5);
+      padding: 5px 2px;
+      border: none;
+      transition: 200ms;
+      &--left {
+        left: 0;
+        padding-right: 5px;
+      }
+      &--right {
+        padding-left: 5px;
+        right: 0;
+      }
+      &:hover {
+        background: rgba(0, 0, 0, 1);
+      }
+      img {
+        width: 30px;
+      }
+    }
+    &__dots {
+      position: absolute;
+      bottom: 20px;
+      left: 50%;
+      transform: translateX(-50%);
+      &__dot {
+        display: inline-block;
+        button {
+          font-size: 0;
+          transition: 200ms;
+          border: none;
+          width: 8px;
+          height: 8px;
+          background: rgba(0, 0, 0, 0.5);
+          border-radius: 8px;
+          margin: 0 8px;
+          padding: 0;
+        }
+        &--active,
+        &:hover {
+          button {
+            background: rgba(0, 0, 0, 1);
+          }
+        }
+      }
+    }
+  }
+}

@@ -3,50 +3,26 @@ import { withGesture } from "react-with-gesture";
 import { Spring, animated } from "react-spring";
 import debounce from "lodash/debounce";
 
-import LeftArrow from "./assets/images/arrow-left.svg";
-import RightArrow from "./assets/images/arrow-right.svg";
+import LeftArrow from "./assets/images/arrow-left.png";
+import RightArrow from "./assets/images/arrow-right.png";
 import "./assets/scss/carousel.scss";
 
-//Demo content
-const settings = {
-  infinite: true,
-  rewind: false,
-  slidesToShow: 5
-};
-
-class ReactSimpleCarousel extends Component {
+class ReactSpringCarousel extends Component {
+  static defaultProps = {
+    infinite: true,
+    rewind: false,
+    slidesToShow: 3,
+    springConfig: {
+      mass: 1,
+      tension: 300,
+      friction: 10,
+      clamp: true
+    }
+  };
   constructor(props) {
-    slideRefs = [];
     super(props);
-    //TODO: use props to get settings
-    // const {settings} = this.props
-    // //create refs for slides
-    // // settings.slides.forEach((slide, i) => {
-    // //   this.slideRefs.push(React.createRef());
-    // // });
-
-    // const childSlides = this.props.children;
-    // const slides = [
-    //   ...childSlides.map((slide, i) => ({
-    //     el: { ...slide },
-    //     clone: true,
-    //     index: i
-    //   })),
-    //   ...childSlides.map((slide, i) => ({
-    //     el: { ...slide },
-    //     clone: false,
-    //     index: i
-    //   })),
-    //   ...childSlides.map((slide, i) => ({
-    //     el: { ...slide },
-    //     clone: true,
-    //     index: i
-    //   }))
-    // ];
-    // slides.forEach((slide, i) => {
-    //   this.slideRefs.push(React.createRef());
-    // });
-    // const numSlides = childSlides.length;
+    console.log(this.props);
+    this.slideRefs = [];
     this.state = {
       onSlide: 0,
       slides: [],
@@ -117,23 +93,23 @@ class ReactSimpleCarousel extends Component {
   incrementSlide = (n, cb = () => {}) => {
     const { onSlide, numSlides } = this.state;
     let { cutToSlideOnRest } = this.state;
-    //TODO: use props to get settings
-    // const {settings} = this.props
+    const { infinite, rewind } = this.props;
     let toSlide = onSlide + n;
-    //Why not just use 0?
+
+    //Why are we doing this again?
     const slideDiff = toSlide % (numSlides - 0);
     if (toSlide >= numSlides) {
-      if (settings.infinite) {
+      if (infinite) {
         cutToSlideOnRest = slideDiff;
-      } else if (settings.rewind) {
+      } else if (rewind) {
         toSlide = 0;
       } else {
         toSlide = numSlides - 1;
       }
     } else if (toSlide < 0) {
-      if (settings.infinite) {
+      if (infinite) {
         cutToSlideOnRest = numSlides + slideDiff;
-      } else if (settings.rewind) {
+      } else if (rewind) {
         toSlide = numSlides - 1;
       } else {
         toSlide = 0;
@@ -326,29 +302,19 @@ class ReactSimpleCarousel extends Component {
 
     //get offset
     const { onSlide, noAnimate, numSlides, slides } = this.state;
-    const { slidesToShow } = settings;
+    const { slidesToShow } = this.props;
     const baseOffset = this.calculateOffset(onSlide);
     const offset = down ? xDelta + baseOffset : baseOffset;
 
     // Using slides.length instead of numSlides to account for clones
     const sliderWidth = `${(slides.length * 100) / slidesToShow}%`;
 
-    const styles = {};
-    const springConfig = {
-      mass: 1,
-      tension: 300,
-      friction: 10,
-      clamp: true
-    };
+    const { springConfig } = this.props;
 
     const prevSlideNum = this.wrapAroundCount(onSlide - 1);
     const nextSlideNum = this.wrapAroundCount(onSlide + 1);
     return (
-      <div
-        className="react-simple-carousel"
-        style={styles}
-        ref={this.sliderRef}
-      >
+      <div className="react-spring-carousel" ref={this.sliderRef}>
         <Spring
           config={springConfig}
           native
@@ -364,22 +330,22 @@ class ReactSimpleCarousel extends Component {
         >
           {({ x }) => (
             <animated.div
-              className="react-simple-carousel__inner"
+              className="react-spring-carousel__inner"
               style={{
                 transform: x.interpolate(x => `translate3d(${x}px,0,0)`),
                 width: sliderWidth
               }}
             >
               {slides.map((slide, i) => (
-                <ReactSimpleCarouselSlide
+                <ReactSpringCarouselSlide
                   key={i}
                   ref={this.slideRefs[i]}
                   handleClick={this.handleClick}
                   slideIndex={slide.index}
                   isClone={slide.clone}
                   //TO DO: this needs to be correctly calculated
-                  //e.g. react-simple-carousel__slide--distance_1 is the same as next
-                  //e.g. react-simple-carousel__slide--distance_-1 is the same as prev
+                  //e.g. react-spring-carousel__slide--distance_1 is the same as next
+                  //e.g. react-spring-carousel__slide--distance_-1 is the same as prev
                   relFromActive={slide.index - onSlide}
                   isPrev={slide.index === prevSlideNum}
                   isNext={slide.index === nextSlideNum}
@@ -388,36 +354,36 @@ class ReactSimpleCarousel extends Component {
                   numSlides={numSlides}
                 >
                   {slide.el}
-                </ReactSimpleCarouselSlide>
+                </ReactSpringCarouselSlide>
               ))}
             </animated.div>
           )}
         </Spring>
-        <div className="react-simple-carousel__controls">
+        <div className="react-spring-carousel__controls">
           <button
-            className="react-simple-carousel__controls__arrow react-simple-carousel__controls__arrow--left"
+            className="react-spring-carousel__controls__arrow react-spring-carousel__controls__arrow--left"
             onClick={this.prev}
           >
             <img src={LeftArrow} alt="Previous" />
             Previous
           </button>
           <button
-            className="react-simple-carousel__controls__arrow react-simple-carousel__controls__arrow--right"
+            className="react-spring-carousel__controls__arrow react-spring-carousel__controls__arrow--right"
             onClick={this.next}
           >
             <img src={RightArrow} alt="Next" />
             Next
           </button>
-          <ul className="react-simple-carousel__controls__dots">
+          <ul className="react-spring-carousel__controls__dots">
             {Array.apply(null, { length: numSlides }).map((x, i) => {
               const additionalClasses =
                 i === onSlide
-                  ? "react-simple-carousel__controls__dots__dot--active"
+                  ? "react-spring-carousel__controls__dots__dot--active"
                   : "";
               return (
                 <li
                   key={i}
-                  className={`react-simple-carousel__controls__dots__dot ${additionalClasses}`}
+                  className={`react-spring-carousel__controls__dots__dot ${additionalClasses}`}
                 >
                   <button
                     onClick={e => {
@@ -432,7 +398,7 @@ class ReactSimpleCarousel extends Component {
             })}
           </ul>
         </div>
-        {/* <div className="react-simple-carousel__details">
+        {/* <div className="react-spring-carousel__details">
           <div>on slide: {onSlide}</div>
           <div>interaction: {this.state.interaction}</div>
         </div> */}
@@ -441,7 +407,7 @@ class ReactSimpleCarousel extends Component {
   }
 }
 
-const ReactSimpleCarouselSlide = React.forwardRef(
+const ReactSpringCarouselSlide = React.forwardRef(
   (
     {
       children,
@@ -457,22 +423,22 @@ const ReactSimpleCarouselSlide = React.forwardRef(
     },
     ref
   ) => {
-    let classNames = ["react-simple-carousel__slide"];
-    classNames.push(`react-simple-carousel__slide--index-${slideIndex}`);
-    classNames.push(`react-simple-carousel__slide--distance_${relFromActive}`);
+    let classNames = ["react-spring-carousel__slide"];
+    classNames.push(`react-spring-carousel__slide--index-${slideIndex}`);
+    classNames.push(`react-spring-carousel__slide--distance_${relFromActive}`);
     if (isClone) {
-      classNames.push("react-simple-carousel__slide--clone");
+      classNames.push("react-spring-carousel__slide--clone");
     }
     if (isNext) {
-      classNames.push("react-simple-carousel__slide--next");
+      classNames.push("react-spring-carousel__slide--next");
     }
     if (isPrev) {
-      classNames.push("react-simple-carousel__slide--prev");
+      classNames.push("react-spring-carousel__slide--prev");
     }
     if (isActive) {
-      classNames.push("react-simple-carousel__slide--active");
+      classNames.push("react-spring-carousel__slide--active");
     } else {
-      classNames.push("react-simple-carousel__slide--inactive");
+      classNames.push("react-spring-carousel__slide--inactive");
     }
     return (
       <div
@@ -486,4 +452,4 @@ const ReactSimpleCarouselSlide = React.forwardRef(
   }
 );
 
-export default withGesture()(ReactSimpleCarousel);
+export default withGesture()(ReactSpringCarousel);

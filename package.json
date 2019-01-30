@@ -1,14 +1,14 @@
 {
   "name": "react-spring-carousel",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "description": "Note! This library is in development / alpha and should not be used in your production projects. It may not even work. Also, you probably want a different carousel like nuka-carousel, anyway. A simple carousel component for React using gestures and React Spring",
   "main": "dist/index.js",
   "repository": "https://github.com/cborchert/react-spring-carousel",
   "author": "Christopher Borchert",
   "license": "MIT",
   "scripts": {
-    "build": "parcel build ./src/index.js --target node --out-dir ./dist",
-    "start": "parcel build ./src/index.js --target node --out-dir ./dist --watch"
+    "start": "webpack --watch",
+    "build": "webpack"
   },
   "keywords": [
     "simple",
@@ -21,6 +21,7 @@
   "dependencies": {
     "lodash": "^4.17.11",
     "react": "^16.7.0",
+    "react-dom": "^16.7.0",
     "react-spring": "^7.2.10",
     "react-with-gesture": "^4.0.2"
   },
@@ -28,7 +29,18 @@
     "@babel/core": "^7.2.2",
     "@babel/plugin-proposal-class-properties": "^7.3.0",
     "@babel/preset-react": "^7.0.0",
+    "babel-loader": "^8.0.5",
+    "css-loader": "^2.1.0",
+    "file-loader": "^3.0.1",
+    "img-loader": "^3.0.1",
+    "node-sass": "^4.11.0",
     "parcel-bundler": "^1.11.0",
-    "sass": "^1.16.1"
+    "sass": "^1.16.1",
+    "sass-loader": "^7.1.0",
+    "style-loader": "^0.23.1",
+    "svg-inline-loader": "^0.8.0",
+    "url-loader": "^1.1.2",
+    "webpack": "^4.29.0",
+    "webpack-cli": "^3.2.1"
   }
 }

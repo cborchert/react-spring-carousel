@@ -1,6 +1,6 @@
 # Note! This library is in development / alpha and should not be used in your production projects. It may not even work. Also, you probably want a different carousel like nuka-carousel, anyway.
 
-# react-simple-carousel
+# react-spring-carousel
 
 A simple carousel component for React using gestures and React Spring.
 

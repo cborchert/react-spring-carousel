@@ -1,7 +1,7 @@
 {
   "name": "react-simple-carousel",
   "version": "1.0.0",
-  "description": "A simple carousel component for React using gestures and React Spring",
+  "description": "Note! This library is in development / alpha and should not be used in your production projects. It may not even work. Also, you probably want a different carousel like nuka-carousel, anyway. A simple carousel component for React using gestures and React Spring",
   "main": "dist/index.js",
   "repository": "https://github.com/cborchert/react-simple-carousel",
   "author": "Christopher Borchert",

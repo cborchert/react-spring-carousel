@@ -1,7 +1,7 @@
 {
-  "name": "react-spring-carousel",
-  "version": "0.0.4",
-  "description": "Note! This library is in development / alpha and should not be used in your production projects. It may not even work. Also, you probably want a different carousel like nuka-carousel, anyway. A simple carousel component for React using gestures and React Spring",
+  "name": "formerly-react-spring-carousel",
+  "version": "0.0.5",
+  "description": "Formerly react-spring-carousel Note! This library is in development / alpha and should not be used in your production projects. It may not even work. Also, you probably want a different carousel like nuka-carousel, anyway. A simple carousel component for React using gestures and React Spring",
   "main": "dist/index.js",
   "repository": "https://github.com/cborchert/react-spring-carousel",
   "author": "Christopher Borchert",
